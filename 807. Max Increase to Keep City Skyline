@@ -1,0 +1,57 @@
+/*
+Example:
+Input: grid = [[3,0,8,4],[2,4,5,7],[9,2,6,3],[0,3,1,0]]
+Output: 35
+Explanation: 
+The grid is:
+[ [3, 0, 8, 4], 
+  [2, 4, 5, 7],
+  [9, 2, 6, 3],
+  [0, 3, 1, 0] ]
+
+The skyline viewed from top or bottom is: [9, 4, 8, 7]
+The skyline viewed from left or right is: [8, 7, 9, 3]
+
+The grid after increasing the height of buildings without affecting skylines is:
+
+gridNew = [ [8, 4, 8, 7],
+            [7, 4, 7, 7],
+            [9, 4, 8, 7],
+            [3, 3, 3, 3] ]
+            
+            */
+
+class Solution {
+    public int maxIncreaseKeepingSkyline(int[][] grid) {
+        
+        int rowSize = grid.length;
+        int columnSize = grid[0].length;
+        
+        int rowMax[] = new int[rowSize];
+        int columnMax[] = new int[columnSize];
+        
+        int result = 0;
+        
+        for(int i=0;i<rowSize;i++){
+            for(int j=0;j<columnSize;j++){
+                rowMax[i] = Math.max(rowMax[i],grid[i][j]);
+            }
+        }
+        
+        for(int i=0;i<columnSize;i++){
+            for(int j=0;j<rowSize;j++){
+                columnMax[i] = Math.max(columnMax[i],grid[j][i]);
+            }
+        }
+        
+
+        for(int i=0;i<rowSize;i++){
+            for(int j=0;j<columnSize;j++){
+                result += Math.min(rowMax[i],columnMax[j])-grid[i][j];
+            }
+        }
+        
+        return result;
+        
+    }
+}
